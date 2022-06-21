@@ -1,0 +1,5 @@
+yt_dlp>=2022.5.18
+lyricsgenius>=3.0.1
+eyed3>=0.9.6
+requests>=2.27.1
+Pillow>=9.1.1
