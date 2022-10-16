@@ -131,17 +131,13 @@ if __name__ == "__main__":
                         input("{} Couldn't download this track... Please fix your network connection and press ENTER!".format(ERROR))
 
                 # parse tags and download cover
-                tags = eyed3.load(os.path.join(OUTPUT_DIR, item["title"].replace("|", "_").replace("/", "_").replace("\"", "\'") + ".mp3"))
-                try:  # try to change some chars in the filename
-                    tags.rename(os.path.join(OUTPUT_DIR, item["title"].replace("-", "~").replace("/", "~").replace("|", "~").replace("\"", "\'")))
-                except OSError:
-                    pass
+                tags = eyed3.load(os.path.join(OUTPUT_DIR, item["title"].replace("|", "_").replace("/", "_").replace("\"", "＂") + ".mp3"))
 
-                tags.tag.title = item["title"].replace("-", "~").replace("/", "|")
+                tags.tag.title = item["title"]
                 try:  # some videos do not contain an artist, so instead we take the name of the channel
-                    tags.tag.artist = item["artist"].replace("-", "~").replace("/", "|")
+                    tags.tag.artist = item["artist"]
                 except KeyError:
-                    tags.tag.artist = item["uploader"].replace("-", "~").replace("/", "|")
+                    tags.tag.artist = item["uploader"]
                 try:
                     tags.tag.album = item["album"]
                 except KeyError:
