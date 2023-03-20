@@ -50,9 +50,13 @@ def prog_hook(d):
             artist = item["artist"]
         except KeyError:
             artist = item["uploader"]
+        try:
+            total_bytes = d["total_bytes"]
+        except KeyError:
+            total_bytes = d["total_bytes_estimate"]
         print("\r{} Downloading track {} / {} : {} - {}{}{} ({}) ..." \
               .format(INFO, item["playlist_index"] if len(items) > 1 else 1, item["playlist_count"] if len(items) > 1 else 1, artist, BOLD, item["title"], RST,
-                      "{:2.1f}%".format(d["downloaded_bytes"] / d["total_bytes"] * 100)), end="")
+                      "{:2.1f}%".format(d["downloaded_bytes"] / total_bytes * 100)), end="")
 
 
 # main-function
@@ -131,7 +135,7 @@ if __name__ == "__main__":
                         input("{} Couldn't download this track... Please fix your network connection and press ENTER!".format(ERROR))
 
                 # parse tags and download cover
-                tags = eyed3.load(os.path.join(OUTPUT_DIR, item["title"].replace("|", "_").replace("/", "_").replace("\"", "＂") + ".mp3"))
+                tags = eyed3.load(os.path.join(OUTPUT_DIR, item["title"].replace("|", "｜").replace("/", "⧸").replace("\"", "＂") + ".mp3"))
 
                 tags.tag.title = item["title"]
                 try:  # some videos do not contain an artist, so instead we take the name of the channel
